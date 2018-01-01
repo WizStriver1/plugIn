@@ -23,8 +23,9 @@ $(function() {
     var cur = 0,
         max = n - 1,
         pt = 0,
-        stay = 1 * 1000, /* ms */
+        stay = 3 * 1000, /* ms */
         dur = .6 * 1000, /* ms */
+        slast = true,
         btns;
     function go(dir, slast) {
         pt = +new Date();
@@ -47,9 +48,11 @@ $(function() {
             });
         } else {
             t = cur - 1;
+            if(t < 0 && slast) {
+                p.css({left: -1 * root_w * (max + 1)});
+            }
             if (t < 0) {
                 t = max;
-                p.css({left: -1 * root_w * (max + 1)});
                 return dgo(t);
             } else {
                 return dgo(t);
@@ -72,11 +75,11 @@ $(function() {
                 .css({width: n * 20, marginLeft: -10 * n})//焦点样式
         )
         .delegate('s', 'click', function(ev) {
-            go($(this).is('.prev') ? -1 : 1, true);
+            go($(this).is('.prev') ? -1 : 1, slast);
         })
         .append(pn_btn)
         .appendTo($root);
-    // go(1, true);
+    // go(1, slast);
     // 自动播放
     var ie6 = $.browser.msie && $.browser.version < '7.0';
     $root.hover(function(ev) { 
@@ -93,7 +96,7 @@ $(function() {
             if (now - pt < stay) {
                 return;
             }
-            go(1, true);
+            go(1, slast);
         }, stay);
 		p.mouseover(function(){ clearInterval(si);})
 		p.mouseout(function(){
@@ -102,7 +105,7 @@ $(function() {
 			if (now - pt < stay) {
 			return;
 			}
-			go(1, true);
+			go(1, slast);
 			}, stay);
 		})
     }

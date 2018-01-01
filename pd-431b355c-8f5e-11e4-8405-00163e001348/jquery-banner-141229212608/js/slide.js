@@ -78,7 +78,7 @@ $(function(){
     // go(1, true);
     // 自动播放
     var ie6 = $.browser.msie && $.browser.version < '7.0';
-    $root.hover(function(ev) { 
+    $root.hover(function(ev) {
         // $root[(ev.type == 'mouseenter' ? 'add' : 'remove') + 'Class']('show-hover');
         if (ie6) {
             pn_btn[ev.type == 'mouseenter' ? 'show' : 'hide']();
